@@ -32,15 +32,17 @@
     <![endif]-->
 
 
-  <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script src="js/jquery-3.2.1.min.js"></script>
+
     <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>-->
     <script type="text/javascript" src="js/eventemitter2.min.js"></script>
-<!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
-<script type="text/javascript" src="js/roslib.min.js"></script>
 
-<script type="text/javascript" type="text/javascript">
-  <!--var ROS_MASTER = 'ws://172.16.54.130:9090'-->
+    <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
+    <script type="text/javascript" src="js/roslib.min.js"></script>
+
+    <script type="text/javascript" type="text/javascript">
+  // var ROS_MASTER = 'ws://172.16.54.130:9090'
   var ROS_MASTER = 'ws://'+window.location.hostname+':9090'
   var NAMESPACE = ''
   var VELOCITY_TOPIC = NAMESPACE + '/cmd_vel'
@@ -161,13 +163,31 @@
         </nav>
         <h3 class="text-muted">ROS Simple Web Teleop</h3>
       </div>
-	<div id="alertmsg" class="alert alert-danger hidden"  data-toggle="collapse" role="alert">Error connecting to websocket server. Is rosbridge running?<br/>roslaunch rosbridge_server rosbridge_websocket.launch</div>
+      <div id="alertmsg" class="alert alert-danger hidden"  data-toggle="collapse" role="alert">
+        Error connecting to websocket server. Is rosbridge running?<br/>roslaunch rosbridge_server rosbridge_websocket.launch
+      </div>
 
       <div class="jumbotron">
         <h1>Video Stream</h1>
         <p class="lead">coming soon...</p>
       </div>
 
+      <!--
+      <div clss="row speedslider">
+        <div class="col-sm-4">
+          <a id="btnSlower" class="btn btn-primary" href="#" role="button" >-</a>
+        </div>
+        <div class="col-sm-4">
+          <h4><span class="label label-default">
+            Speed
+          </h4>
+          </span>
+        </div>
+        <div class="col-sm-4">
+          <a id="btnFaster" class="btn btn-primary" href="#" role="button">+</a>
+        </div>
+      </div>
+    -->
       <div class="row keyboard">
         <div class="col-sm-4">
         </div>
@@ -183,7 +203,7 @@
         <div class="col-sm-4">
           <a id="btnLeft" class="btn btn-lg btn-primary btn-block" href="#" role="button">Left</a>
         </div>
-	<div class="col-sm-4">
+        <div class="col-sm-4">
           <a id="btnBack" class="btn btn-lg btn-primary btn-block" href="#" role="button">Back</a>
         </div>
         <div class="col-sm-4">
@@ -194,7 +214,7 @@
       <p></p>
 
       <footer class="footer">
-        <p>&copy; 2016 Company, Inc.</p>
+        <p>&copy; 2017 us</p>
       </footer>
 
     </div> <!-- /container -->
@@ -229,6 +249,8 @@
         $('#btnRight').on('mouseup touchstop', function() {
                   cmdVel.publish(stwist);console.log('Right releasd');
         });
+
+
         //onclick="" onrelease="cmdVel.publish(stwist);console.log('Forward released'); return false;"
       </script>
 
