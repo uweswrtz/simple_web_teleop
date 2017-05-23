@@ -79,9 +79,10 @@
     messageType : 'geometry_msgs/Twist'
   });
 
+  var speed = 0.8;
   var ftwist = new ROSLIB.Message({
     linear : {
-      x : 1,
+      x : 1 * speed,
       y : 0,
       z : 0
     },
@@ -100,7 +101,7 @@
     angular : {
       x : 0,
       y : 0,
-      z : 1
+      z : 1 * speed
     }
   });
   var rtwist = new ROSLIB.Message({
@@ -112,12 +113,12 @@
     angular : {
       x : 0,
       y : 0,
-      z : -1
+      z : -1 * speed
     }
   });
   var btwist = new ROSLIB.Message({
     linear : {
-      x : -1,
+      x : -1 * speed,
       y : 0,
       z : 0
     },
@@ -168,26 +169,37 @@
       </div>
 
       <div class="jumbotron">
-        <h1>Video Stream</h1>
-        <p class="lead">coming soon...</p>
+        <div class="embed-responsive embed-responsive-4by3">
+
+            <video src="http://rosbot.local:8080" type='video/mp4'>
+	               This is fallback content to display for user agents that do not support the video tag.
+               </video>
+        </div>
       </div>
 
-      <!--
-      <div clss="row speedslider">
-        <div class="col-xs-4">
-          <a id="btnSlower" class="btn btn-primary" href="#" role="button" >-</a>
+
+      <div class="row speedslider">
+        <form class="form-inline">
+        <div class="col-xs-4 text-right">
+          <button id="btnSlower" class="btn btn-primary" type="submit">
+              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+
+          </button>
         </div>
-        <div class="col-xs-4">
-          <h4><span class="label label-default">
-            Speed
-          </h4>
-          </span>
+        <div class="col-xs-4 text-center">
+          <input type="number" class="form-control" id="speedInput" placeholder="80">
+
         </div>
-        <div class="col-xs-4">
-          <a id="btnFaster" class="btn btn-primary" href="#" role="button">+</a>
+        <div class="col-xs-4 text-left">
+          <p>
+          <button id="btnFaster" class="btn btn-primary" type="submit">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+        </p>
         </div>
+      </form>
       </div>
-    -->
+
       <div class="row keyboard">
         <div class="col-xs-4">
         </div>
@@ -210,6 +222,7 @@
           <a id="btnRight" class="btn btn-lg btn-primary btn-block" href="#" role="button">Right</a>
         </div>
       </div>
+
 
       <p></p>
 
