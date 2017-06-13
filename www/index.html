@@ -168,12 +168,17 @@
         Error connecting to websocket server. Is rosbridge running?<br/>roslaunch rosbridge_server rosbridge_websocket.launch
       </div>
 
+
       <div class="jumbotron">
         <div class="embed-responsive embed-responsive-4by3">
 
-            <video src="http://rosbot.local:8080" type='video/mp4'>
-	               This is fallback content to display for user agents that do not support the video tag.
-               </video>
+            <img src="http://rosbot.local:8080/stream?topic=/raspicam_node/image" >
+	               Video stream error.<br/>
+                 Is a camera node and the web video server running?<br/><br/>
+                 roslaunch raspicam_node camerav2_640x480_10fpx.launch<br/>
+                 rosrun image_transport republish compressed in:=/raspicam_node/image raw out:=/raspicam_node/image<br/><br/>
+                 rosrun web_video_server web_video_server<br/>
+               </img>
         </div>
       </div>
 
