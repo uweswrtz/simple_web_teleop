@@ -53,6 +53,7 @@
 
   var ros = new ROSLIB.Ros({
     //url : 'ws://localhost:9090'
+    //url:'ws://rosbot.local:9090'
     url : ROS_MASTER
   });
 
@@ -80,67 +81,78 @@
   });
 
   var speed = 0.8;
-  var ftwist = new ROSLIB.Message({
-    linear : {
-      x : 1 * speed,
-      y : 0,
-      z : 0
-    },
-    angular : {
-      x : 0,
-      y : 0,
-      z : 0
-    }
-  });
-  var ltwist = new ROSLIB.Message({
-    linear : {
-      x : 0,
-      y : 0,
-      z : 0
-    },
-    angular : {
-      x : 0,
-      y : 0,
-      z : 1 * speed
-    }
-  });
-  var rtwist = new ROSLIB.Message({
-    linear : {
-      x : 0,
-      y : 0,
-      z : 0
-    },
-    angular : {
-      x : 0,
-      y : 0,
-      z : -1 * speed
-    }
-  });
-  var btwist = new ROSLIB.Message({
-    linear : {
-      x : -1 * speed,
-      y : 0,
-      z : 0
-    },
-    angular : {
-      x : 0,
-      y : 0,
-      z : 0
-    }
-  });
-  var stwist = new ROSLIB.Message({
-    linear : {
-      x : 0,
-      y : 0,
-      z : 0
-    },
-    angular : {
-      x : 0,
-      y : 0,
-      z : 0
-    }
-  });
 
+  function ftwist(s) {
+    return new ROSLIB.Message({
+      linear : {
+        x : 1 * s,
+        y : 0,
+        z : 0
+      },
+      angular : {
+        x : 0,
+        y : 0,
+        z : 0
+      }
+    });
+
+  }
+  function ltwist(s) {
+    return new ROSLIB.Message({
+      linear : {
+        x : 0,
+        y : 0,
+        z : 0
+      },
+      angular : {
+        x : 0,
+        y : 0,
+        z : 1 * s
+      }
+    });
+  }
+  function rtwist(s) {
+    return new ROSLIB.Message({
+      linear : {
+        x : 0,
+        y : 0,
+        z : 0
+      },
+      angular : {
+        x : 0,
+        y : 0,
+        z : -1 * s
+      }
+    });
+  }
+  function btwist(s) {
+    return new ROSLIB.Message({
+      linear : {
+        x : -1 * s,
+        y : 0,
+        z : 0
+      },
+      angular : {
+        x : 0,
+        y : 0,
+        z : 0
+      }
+    });
+  }
+  function stwist() {
+    return new ROSLIB.Message({
+      linear : {
+        x : 0,
+        y : 0,
+        z : 0
+      },
+      angular : {
+        x : 0,
+        y : 0,
+        z : 0
+      }
+    });
+  }
   //cmdVel.publish(ftwist);
 
 
@@ -184,15 +196,17 @@
 
 
       <div class="row speedslider">
-        <form class="form-inline">
-        <div class="col-xs-4 text-right">
-          <button id="btnSlower" class="btn btn-primary" type="submit">
-              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 
+
+        <div class="col-xs-4 text-right">
+          <button id="btnSlower" class="btn btn-primary" >
+              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
           </button>
         </div>
         <div class="col-xs-4 text-center">
-          <input type="number" class="form-control" id="speedInput" placeholder="80">
+
+          <input type="number" class="form-control" name="speedInput" id="speedInput" value="80">
+
 
         </div>
         <div class="col-xs-4 text-left">
@@ -202,7 +216,7 @@
           </button>
         </p>
         </div>
-      </form>
+
       </div>
 
       <div class="row keyboard">
@@ -243,29 +257,45 @@
   -->
     <script type="text/javascript" type="text/javascript">
         //$('#btnForward').click(function(){ console.log('Forward pushed'); return false; });
+        $("#btnSlower").on("click", function() {
+          console.log("btnSlower")
+          var oldValue = $("#speedInput").val();
+          // Don't allow decrementing below zero
+          if (oldValue > 9) {
+            var newVal = parseFloat(oldValue) - 10;
+          } else {
+            newVal = 0;
+          }
+
+          $("#speedInput").val(newVal);
+          speed = newVal/100;
+          console.log('oldValue: ' + oldValue+' newVal: ' +newVal+ ' speed: '+ speed);
+        });
+
         $('#btnForward').on('mousedown touchstart', function() {
-               cmdVel.publish(ftwist);console.log('Forward pressed');
+                console.log('Forward pressed');
+               cmdVel.publish(ftwist(speed));
         });
         $('#btnForward').on('mouseup touchstop', function() {
-                cmdVel.publish(stwist);console.log('Forward releasd');
+                cmdVel.publish(stwist());console.log('Forward releasd');
         });
         $('#btnBack').on('mousedown touchstart', function() {
-                 cmdVel.publish(btwist);console.log('Back pressed');
+                 cmdVel.publish(btwist(speed));console.log('Back pressed');
         });
         $('#btnBack').on('mouseup touchstop', function() {
-                  cmdVel.publish(stwist);console.log('Back releasd');
+                  cmdVel.publish(stwist());console.log('Back releasd');
         });
         $('#btnLeft').on('mousedown touchstart', function() {
-                 cmdVel.publish(ltwist);console.log('Left pressed');
+                 cmdVel.publish(ltwist(speed));console.log('Left pressed');
         });
         $('#btnLeft').on('mouseup touchstop', function() {
-                  cmdVel.publish(stwist);console.log('Left releasd');
+                  cmdVel.publish(stwist());console.log('Left releasd');
         });
         $('#btnRight').on('mousedown touchstart', function() {
-                 cmdVel.publish(rtwist);console.log('Rigth pressed');
+                 cmdVel.publish(rtwist(speed));console.log('Rigth pressed');
         });
         $('#btnRight').on('mouseup touchstop', function() {
-                  cmdVel.publish(stwist);console.log('Right releasd');
+                  cmdVel.publish(stwist());console.log('Right releasd');
         });
 
 
