@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>ROS Simple Web Teleop</title>
+    <title>Simple Web Teleop</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -53,13 +53,14 @@
   // -----------------
 
   var ros = new ROSLIB.Ros({
-    //url : 'ws://localhost:9090'
+    url : 'ws://localhost:9090'
     //url:'ws://rosbot.local:9090'
-    url : ROS_MASTER
+    //url : ROS_MASTER
   });
 
   ros.on('connection', function() {
     console.log('Connected to websocket server.');
+    $("#connectemsg").toggleClass("hidden");
   });
 
   ros.on('error', function(error) {
@@ -69,7 +70,7 @@
 
   ros.on('close', function() {
     console.log('Connection to websocket server closed.');
-    $("#alertmsg").toggleClass("hidden");
+    $("#closemsg").toggleClass("hidden");
   });
 
   // Publishing a Topic
@@ -175,10 +176,16 @@
             <li role="presentation"><a href="#">Contact</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">ROS Simple Web Teleop</h3>
+        <h3 class="text-muted">Simple Web Teleop</h3>
       </div>
       <div id="alertmsg" class="alert alert-danger hidden"  data-toggle="collapse" role="alert">
         Error connecting to websocket server. Is rosbridge running?<br/>roslaunch rosbridge_server rosbridge_websocket.launch
+      </div>
+      <div id="closemsg" class="alert alert-warning hidden"  data-toggle="collapse" role="alert">
+        Closing connecting to websocket server. 
+      </div>
+      <div id="connectmsg" class="alert alert-success hidden"  data-toggle="collapse" role="alert">
+        Connected!!!
       </div>
 
 
@@ -247,7 +254,7 @@
       <p></p>
 
       <footer class="footer">
-        <p>&copy; 2017 us</p>
+        <p>&copy; 2019 uweswrtz</p>
       </footer>
 
     </div> <!-- /container -->
@@ -264,6 +271,21 @@
           // Don't allow decrementing below zero
           if (oldValue > 9) {
             var newVal = parseFloat(oldValue) - 10;
+          } else {
+            newVal = 0;
+          }
+
+          $("#speedInput").val(newVal);
+          speed = newVal/100;
+          console.log('oldValue: ' + oldValue+' newVal: ' +newVal+ ' speed: '+ speed);
+        });
+
+        $("#btnFaster").on("click", function() {
+          console.log("btnFaster")
+          var oldValue = $("#speedInput").val();
+          // Don't allow increasing above 100s
+          if (oldValue < 91) {
+            var newVal = parseFloat(oldValue) + 10;
           } else {
             newVal = 0;
           }
