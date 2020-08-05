@@ -52,10 +52,11 @@
   // Connecting to ROS
   // -----------------
 
+  console.log('Connecting to: ',ROS_MASTER);
   var ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
+    //url : 'ws://localhost:9090'
     //url:'ws://rosbot.local:9090'
-    //url : ROS_MASTER
+    url : ROS_MASTER
   });
 
   ros.on('connection', function() {
@@ -109,7 +110,7 @@
       angular : {
         x : 0,
         y : 0,
-        z : 1 * s
+        z : 1 * s 
       }
     });
   }
@@ -309,13 +310,13 @@
                   cmdVel.publish(stwist());console.log('Back releasd');
         });
         $('#btnLeft').on('mousedown touchstart', function() {
-                 cmdVel.publish(ltwist(speed));console.log('Left pressed');
+                 cmdVel.publish(ltwist(2.8));console.log('Left pressed');
         });
         $('#btnLeft').on('mouseup touchstop', function() {
                   cmdVel.publish(stwist());console.log('Left releasd');
         });
         $('#btnRight').on('mousedown touchstart', function() {
-                 cmdVel.publish(rtwist(speed));console.log('Rigth pressed');
+                 cmdVel.publish(rtwist(2.8));console.log('Rigth pressed');
         });
         $('#btnRight').on('mouseup touchstop', function() {
                   cmdVel.publish(stwist());console.log('Right releasd');

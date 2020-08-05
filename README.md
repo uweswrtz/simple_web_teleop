@@ -25,6 +25,8 @@ ROS Wiki: http://wiki.ros.org/roswww
 
 ## Usage
 
+`roslaunch simple_web_teleop simple_web_teleop.launch`
+
 With roswww the default pre-configured port for the web server is 8085.
 
 The server automatically provides access to files in a 'www' folder of each package (if this folder exists)
