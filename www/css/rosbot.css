@@ -1,4 +1,20 @@
-body { -webkit-touch-callout: none !important; }
+body { -webkit-touch-callout: none !important;
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
 a { -webkit-user-select: none !important; }
 .btn { -webkit-user-select: none !important; }
+
+.button { -webkit-user-select: none !important; }
+
+.disable-select {
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
 

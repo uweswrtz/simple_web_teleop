@@ -53,9 +53,9 @@
   // -----------------
 
   var ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
+    //url : 'ws://localhost:9090'
     //url:'ws://rosbot.local:9090'
-    //url : ROS_MASTER
+    url : ROS_MASTER
   });
 
   ros.on('connection', function() {
@@ -317,7 +317,7 @@
 
           $('#btnForward').on('mousedown touchstart', function () {
             console.log('Forward pressed');
-            moveBaseSimple.publish(mbs_fwd(0.3));
+            moveBaseSimple.publish(mbs_fwd(speed));
           });
           $('#btnForward').on('mouseup touchstop', function () {
             cmdVel.publish(stwist()); console.log('Forward releasd');

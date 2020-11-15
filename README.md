@@ -9,7 +9,10 @@
 
 `roslaunch rosbridge_server rosbridge_websocket.launch`
 
+### ROS web video server
+`sudo apt install ros-melodic-web-video-server`
 
+`rosrun web_video_server web_video_server`
 
 ### ROS Web Server (roswww) 
 
