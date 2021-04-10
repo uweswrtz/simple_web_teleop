@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello Bulma!</title>
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+<!-- <style>
+  html, body {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0;
+      margin: 0;
+  }
+
+  #left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      background: rgba(0, 255, 0, 0.1);
+  }
+
+  #right {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      background: rgba(0, 0, 255, 0.1);
+  }
+  </style> -->
+
+<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+
+<script type="text/javascript" type="text/javascript">
+  var ROS_MASTER = 'ws://'+window.location.hostname+':9090'
+  var NAMESPACE = ''
+  var VELOCITY_TOPIC = NAMESPACE + '/cmd_vel'
+
+
+  // Connecting to ROS
+  // -----------------
+  
+  console.log('Connecting to: ',ROS_MASTER);
+  var ros = new ROSLIB.Ros({
+    //url : 'ws://localhost:9090'
+    //url:'ws://rosbot.local:9090'
+    url : ROS_MASTER
+  });
+
+
+  ros.on('connection', function() {
+    document.getElementById("status").innerHTML = "Connected";
+  });
+
+  ros.on('error', function(error) {
+    document.getElementById("status").innerHTML = "Error";
+  });
+
+  ros.on('close', function() {
+    document.getElementById("status").innerHTML = "Closed";
+  });
+
+  var txt_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/rosout',
+    messageType : 'rosgraph_msgs/Log'
+  });
+
+  txt_listener.subscribe(function(m) {
+    document.getElementById("msg").innerHTML = m.msg;
+  });
+
+  cmd_vel_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : "/cmd_vel",
+    messageType : 'geometry_msgs/Twist'
+  });
+
+  move = function (linear, angular) {
+    var twist = new ROSLIB.Message({
+      linear: {
+        x: linear,
+        y: 0,
+        z: 0
+      },
+      angular: {
+        x: 0,
+        y: 0,
+        z: angular
+      }
+    });
+    cmd_vel_listener.publish(twist);
+  }
+
+
+
+</script>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h5 class="subtitle">
+        Simple ROS User Interface
+      </h5>
+      <p>
+        Connection status: <span id="status"></span>
+      </p>
+      <p>Last /rosout received: <span id="msg"></span></p>
+      
+    </div>
+  </section>
+  
+  <section class="section">
+
+
+    <div class="columns">
+      <div class="column" id="links" >
+        First column
+        
+      </div>
+      <div class="column">
+        Second column
+      </div>
+   
+    </div>
+  </section>
+ 
+
+
+  <div id="left"></div>
+  <div id="right"></div>
+  <script>
+      createJoystickL = function () {
+      var options = {
+        zone: document.getElementById('links'),
+        threshold: 0.1,
+        position: { left: '20%', top: '70%' },
+        mode: 'static',
+        size: 200,
+        color: '#000000',
+      };
+      manager = nipplejs.create(options);
+
+      linear_speed = 0;
+      angular_speed = 0;
+
+      self.manager.on('start', function (event, nipple) {
+  timer = setInterval(function () {
+    move(linear_speed, angular_speed);
+  }, 25);
+});
+
+      self.manager.on('move', function (event, nipple) {
+  max_linear = 2; // m/s
+  max_angular = 7.0; // rad/s
+  max_distance = 75.0; // pixels;
+  linear_speed = Math.sin(nipple.angle.radian) * max_linear * nipple.distance/max_distance;
+  angular_speed = -Math.cos(nipple.angle.radian) * max_angular * nipple.distance/max_distance;
+});
+
+      self.manager.on('end', function () {
+  if (timer) {
+    clearInterval(timer);
+  }
+  self.move(0, 0);
+});
+    }
+    window.onload = function () {
+      createJoystickL();
+    }
+
+/*     var joystickL = nipplejs.create({
+        zone: document.getElementById('left'),
+        mode: 'static',
+        position: { left: '50%', top: '50%' },
+        color: 'green',
+        size: 200
+    }); */
+
+    var joystickR = nipplejs.create({
+        zone: document.getElementById('right'),
+        mode: 'static',
+        position: { left: '80%', top: '70%' },
+        color: 'red',
+        size: 200
+    });
+</script>
+</body>
+</html>

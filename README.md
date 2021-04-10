@@ -2,6 +2,11 @@
 
 
 ## requirements 
+Install all dependencies with:
+
+`rosdep install --from-paths src/simple_web_teleop -y -r`
+
+or install manual:
 
 ### ROS bridge 
 

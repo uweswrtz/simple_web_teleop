@@ -7,44 +7,37 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>Simple Web Teleop</title>
+    <title>Fidi Web Teleop</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32 " href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/rosbot.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/rosbot.css" rel="stylesheet"> -->
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug
-    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-  -->
+
     <!-- Custom styles for this template -->
-    <link href="jumbotron-narrow.css" rel="stylesheet">
+    <!-- <link href="jumbotron-narrow.css" rel="stylesheet"> -->
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <!--
-    <script src="assets/js/ie-emulation-modes-warning.js"></script>
-    -->
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 
     <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/jquery-3.2.1.min.js"></script> -->
 
     <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>-->
     <script type="text/javascript" src="js/eventemitter2.min.js"></script>
 
-    <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
+    <!-- <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script></script>-->
     <script type="text/javascript" src="js/roslib.min.js"></script>
 
     <script type="text/javascript" type="text/javascript">
   // var ROS_MASTER = 'ws://172.16.54.130:9090'
-  var ROS_MASTER = 'ws://'+window.location.hostname+':9090'
+  var ROS_MASTER = 'wss://'+window.location.hostname+':9090'
   var NAMESPACE = ''
   var VELOCITY_TOPIC = NAMESPACE + '/cmd_vel'
 
@@ -168,18 +161,50 @@
 
   <body>
 
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation" ><a href="action.html">Action</a></li>
-            <li role="presentation"><a href="#">About</a></li>
- 
-          </ul>
-        </nav>
-        <h3 class="text-muted">Fidi Web Teleop</h3>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation" >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          Fidi Web Teleop
+        </a>
+    
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item is-active" href="#">
+            Home
+          </a>
+    
+          <a class="navbar-item"  href="joystick1.html">
+            Joystick1
+          </a>
+          <a class="navbar-item" href="action.html">
+            Action
+          </a>
+  
+        </div>
+    
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-warning" id="connectstate">
+                <span id="status">Closed</span>
+              </a>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container">
+
       <div id="alertmsg" class="alert alert-danger hidden"  data-toggle="collapse" role="alert">
         Error connecting to websocket server. Is rosbridge running?<br/>roslaunch rosbridge_server rosbridge_websocket.launch
       </div>
@@ -286,9 +311,7 @@
 
       <p></p>
 
-      <footer class="footer">
-        <p>Copyright 2020 uweswrtz</p>
-      </footer>
+
 
     </div> <!-- /container -->
 

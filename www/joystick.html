@@ -158,40 +158,6 @@
   }
   //cmdVel.publish(ftwist);
 
-  var moveBaseSimple = new ROSLIB.Topic({
-        ros : ros,
-        name : '/move_base_simple/goal',
-        messageType : 'geometry_msgs/PoseStamped'
-  });
-  
-  //move base simple forward
-  function mbs_fwd(value) {
-      return new ROSLIB.Message({
-        header: {
-          seq: 0,
-          stamp: {
-            secs: 0,
-            nsecs: 0
-          },
-          frame_id: 'base_link'
-        },
-        pose: {
-          position: {
-            x : value,
-            y : 0.0,
-            z : 0.0
-          },
-          orientation: {
-            x : 0.0,
-            y : 0.0,
-            z : 0.0,
-            w : 1.0
-          }
-        }
-
-      });
-    }
-
 
   </script>
 
@@ -250,33 +216,22 @@
       </div>
 
       <div class="row keyboard">
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="width:200px;height:200px;margin-bottom:20px;">
+          <div id="joystick"></div>
         </div>
         <div class="col-xs-4">
-          <p>
-          <a id="btnForward" class="btn btn-lg btn-primary btn-block" href="#" role="button">Forward</a>
-        </p>
+          
         </div>
         <div class="col-xs-4">
-        </div>
-      </div>
-      <div class="row keyboard">
-        <div class="col-xs-4">
-          <a id="btnLeft" class="btn btn-lg btn-primary btn-block" href="#" role="button">Left</a>
-        </div>
-        <div class="col-xs-4">
-          <a id="btnBack" class="btn btn-lg btn-primary btn-block" href="#" role="button">Back</a>
-        </div>
-        <div class="col-xs-4">
-          <a id="btnRight" class="btn btn-lg btn-primary btn-block" href="#" role="button">Right</a>
         </div>
       </div>
+
 
 
       <p></p>
 
       <footer class="footer">
-        <p>&copy; 2020 uweswrtz</p>
+        <p>Copyright 2020 uweswrtz</p>
       </footer>
 
     </div> <!-- /container -->
@@ -285,7 +240,16 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
   -->
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.8.7/dist/nipplejs.min.js"></script>
     <script type="text/javascript" type="text/javascript">
+
+          var static = nipplejs.create({
+            zone: document.getElementById('joystick'),
+            mode: 'static',
+            position: { left: '50%', top: '50%' },
+            color: 'blue'
+          });
+        
         //$('#btnForward').click(function(){ console.log('Forward pushed'); return false; });
         $("#btnSlower").on("click", function () {
           console.log("btnSlower")
